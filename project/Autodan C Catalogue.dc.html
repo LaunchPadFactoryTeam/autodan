@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/modernist-45267cd3-6a3d-40aa-9b3a-850096fb0ff2/styles.css">
+  <script src="_ds/modernist-45267cd3-6a3d-40aa-9b3a-850096fb0ff2/_ds_bundle.js"></script>
+  <script src="autodan-data.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #EEF5FD; color: #052747; font-family: 'Archivo', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    * { box-sizing: border-box; }
+    a { color: #052747; text-decoration: none; }
+    a:hover { color: #0a4d8c; }
+    img { display: block; max-width: 100%; }
+    button, input, textarea, select { font: inherit; color: inherit; }
+    ::selection { background: #FFDA1F; color: #052747; }
+    :focus-visible { outline: 2px solid #0a4d8c; outline-offset: 2px; }
+    input[type=range] { accent-color: #052747; }
+  </style>
+</helmet>
+
+<div style="min-height:100vh;background:#EEF5FD">
+
+  <header style="position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(5,39,71,.1)">
+    <div style="max-width:1320px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:20px">
+      <img src="{{ logo }}" alt="Autodan" style="height:32px;width:auto;cursor:pointer" onClick="{{ goHome }}">
+      <nav style="display:flex;gap:4px;margin-left:4px;min-width:0">
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
+          <button type="button" onClick="{{ n.go }}" style="{{ n.style }}">{{ n.label }}</button>
+        </sc-for>
+      </nav>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+        <a href="{{ telHref }}" style="background:#052747;color:#fff;border-radius:999px;padding:12px 22px;white-space:nowrap;font-size:14px;font-weight:600;letter-spacing:.01em" style-hover="background:#0a4d8c;color:#fff">{{ tel }}</a>
+      </div>
+    </div>
+  </header>
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <main>
+      <section style="background:#A2D2FF">
+        <div style="max-width:1320px;margin:0 auto;padding:64px 28px 72px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:center">
+          <div>
+            <span style="display:inline-block;background:#052747;color:#fff;border-radius:999px;padding:7px 16px;font-size:12px;font-weight:600;letter-spacing:.06em;margin-bottom:24px">{{ carCount }} véhicules disponibles à Nice</span>
+            <h1 style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:clamp(40px,5vw,70px);line-height:1.02;letter-spacing:-.025em;margin:0 0 20px;text-wrap:balance">Votre prochaine voiture, inspectée et prête à rouler.</h1>
+            <p style="margin:0 0 14px;font-size:18px;line-height:1.55;max-width:50ch"><strong style="font-weight:600">Achat, vente et recherche</strong> personnalisée de véhicules selon vos objectifs. <strong style="font-weight:600">Dépôt-vente, convoyage et livraison à domicile</strong> en toute maîtrise.</p>
+            <p style="margin:0 0 32px;font-size:18px;line-height:1.55;max-width:50ch">Process clair, <strong style="font-weight:600">gestion administrative</strong> complète et <strong style="font-weight:600">gain de temps garanti.</strong></p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button type="button" onClick="{{ goStock }}" style="background:#052747;color:#fff;border:0;border-radius:999px;padding:16px 28px;font-size:15px;font-weight:600;cursor:pointer;text-align:left" style-hover="background:#0a4d8c">Voir les {{ carCount }} véhicules</button>
+              <a href="{{ telHref }}" style="border:1px solid rgba(5,39,71,.28);border-radius:999px;padding:15px 26px;font-size:15px;font-weight:600" style-hover="border-color:#052747;background:#FFDA1F">Appeler Autodan</a>
+            </div>
+          </div>
+          <div style="position:relative;border-radius:16px;overflow:hidden;min-height:440px;background-image:url('uploads/audi_raph.jpg');background-size:cover;background-position:52% 58%;box-shadow:0 18px 40px rgba(5,39,71,.14)">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,#A2D2FF 0%,rgba(162,210,255,.82) 22%,rgba(162,210,255,.28) 58%,rgba(162,210,255,0) 100%)"></div>
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:28px">
+              <p style="margin:0 0 6px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(5,39,71,.7)">Autodan · Nice</p>
+              <p style="margin:0;font-family:'Host Grotesk',sans-serif;font-weight:600;font-size:22px;line-height:1.2;letter-spacing:-.02em;color:#052747">Livrée, immatriculée,<br>prête à rouler.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="background:#fff">
+        <div style="max-width:1320px;margin:0 auto;padding:52px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:36px">
+          <sc-for list="{{ reasons }}" as="r" hint-placeholder-count="3">
+            <div style="display:flex;gap:16px">
+              <span style="flex:0 0 auto;width:40px;height:40px;border-radius:999px;background:#FFDA1F;display:flex;align-items:center;justify-content:center;font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:16px">{{ r.num }}</span>
+              <div>
+                <h3 style="font-family:'Host Grotesk',sans-serif;font-weight:600;font-size:19px;margin:0 0 7px">{{ r.title }}</h3>
+                <p style="margin:0;font-size:15px;line-height:1.55;color:rgba(5,39,71,.7)">{{ r.body }}</p>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section>
+        <div style="max-width:1320px;margin:0 auto;padding:64px 28px 24px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+          <div>
+            <h2 style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:clamp(28px,3.4vw,42px);letter-spacing:-.02em;line-height:1.05;margin:0 0 10px">Nos voitures du moment</h2>
+            <p style="margin:0;font-size:16px;color:rgba(5,39,71,.7)">Voici les voitures qu'Autodan peut vous proposer à la vente dès aujourd'hui.</p>
+          </div>
+          <button type="button" onClick="{{ goStock }}" style="background:#fff;border:1px solid rgba(5,39,71,.2);border-radius:999px;padding:12px 22px;font-size:14px;font-weight:600;cursor:pointer" style-hover="border-color:#052747;background:#FFDA1F">Tout le stock →</button>
+        </div>
+        <div style="max-width:1320px;margin:0 auto;padding:0 28px 72px">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
+            <sc-for list="{{ cars }}" as="c" hint-placeholder-count="3">
+              <article onClick="{{ c.open }}" style="background:#fff;border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(5,39,71,.07)" style-hover="box-shadow:0 18px 36px rgba(5,39,71,.16)">
+                <div style="position:relative;aspect-ratio:4/3;background:#A2D2FF">
+                  <sc-if value="{{ c.hasPhoto }}" hint-placeholder-val="{{ true }}">
+                    <img src="{{ c.cover }}" alt="{{ c.title }}" style="width:100%;height:100%;object-fit:cover">
+                  </sc-if>
+                  <sc-if value="{{ c.noPhoto }}">
+                    <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:rgba(5,39,71,.65)">Photo à fournir</span>
+                  </sc-if>
+                  <div style="position:absolute;top:12px;left:12px;display:flex;gap:6px;flex-wrap:wrap">
+                    <sc-for list="{{ c.badges }}" as="b" hint-placeholder-count="1">
+                      <span style="background:#FFDA1F;border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;letter-spacing:.04em">{{ b }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="padding:20px 20px 22px;flex:1;display:flex;flex-direction:column">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px">
+                    <h3 style="font-family:'Host Grotesk',sans-serif;font-weight:600;font-size:21px;line-height:1.15;margin:0">{{ c.title }}</h3>
+                    <p style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:21px;margin:0;white-space:nowrap">{{ c.priceLabel }}</p>
+                  </div>
+                  <p style="margin:0 0 18px;font-size:14px;color:rgba(5,39,71,.6)">{{ c.subtitle }}</p>
+                  <div style="margin-top:auto;display:flex;flex-wrap:wrap;gap:6px">
+                    <sc-for list="{{ c.chips }}" as="q" hint-placeholder-count="4">
+                      <span style="background:#EEF5FD;border-radius:999px;padding:7px 13px;font-size:13px;font-weight:500">{{ q }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div style="max-width:1320px;margin:0 auto;padding:0 28px 72px">
+          <div style="background:#fff;border-radius:20px;overflow:hidden;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
+            <img src="{{ aboutPhoto }}" alt="Autodan Nice" style="width:100%;height:100%;min-height:360px;object-fit:cover">
+            <div style="padding:48px 44px">
+              <p style="margin:0 0 16px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(5,39,71,.55)">Qui sommes-nous</p>
+              <h2 style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:clamp(26px,3vw,36px);letter-spacing:-.02em;line-height:1.1;margin:0 0 20px">Une maison indépendante, basée à Nice.</h2>
+              <p style="margin:0 0 14px;font-size:16px;line-height:1.6;color:rgba(5,39,71,.75)">{{ aboutLead }}</p>
+              <p style="margin:0 0 22px;font-size:16px;line-height:1.6;color:rgba(5,39,71,.75)">{{ aboutBody }}</p>
+              <p style="margin:0 0 26px;background:#A2D2FF;border-radius:12px;padding:18px 20px;font-size:15px;line-height:1.5;font-weight:500">{{ aboutClaim }}</p>
+              <button type="button" onClick="{{ goAbout }}" style="background:#052747;color:#fff;border:0;border-radius:999px;padding:14px 26px;font-size:15px;font-weight:600;cursor:pointer;text-align:left" style-hover="background:#0a4d8c">Nos services</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div style="max-width:1320px;margin:0 auto;padding:0 28px 72px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px">
+          <div style="background:#052747;color:#fff;border-radius:20px;padding:44px 40px">
+            <h2 style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:clamp(26px,2.8vw,34px);letter-spacing:-.02em;line-height:1.1;margin:0 0 14px">Vendons votre voiture dès aujourd'hui.</h2>
+            <p style="margin:0 0 28px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.78)">Transmettez-nous les informations et photos de votre véhicule pour que nous préparions sa mise en vente sur nos canaux.</p>
+            <button type="button" onClick="{{ goContact }}" style="background:#FFDA1F;color:#052747;border:0;border-radius:999px;padding:15px 28px;font-size:15px;font-weight:600;cursor:pointer;text-align:left" style-hover="background:#fff">Estimer mon véhicule</button>
+          </div>
+          <div style="background:#fff;border-radius:20px;padding:44px 40px;display:flex;flex-direction:column">
+            <p style="margin:0 0 20px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(5,39,71,.55)">La satisfaction de nos clients</p>
+            <p style="font-family:'Host Grotesk',sans-serif;font-weight:500;font-size:clamp(20px,2.2vw,27px);line-height:1.35;letter-spacing:-.01em;margin:0 0 28px">« {{ quote }} »</p>
+            <div style="margin-top:auto;display:flex;align-items:center;gap:14px">
+              <img src="{{ quotePhoto }}" alt="{{ quoteName }}" style="width:52px;height:52px;border-radius:999px;object-fit:cover">
+              <div>
+                <p style="margin:0;font-size:15px;font-weight:600">{{ quoteName }}</p>
+                <p style="margin:0;font-size:13px;color:rgba(5,39,71,.6)">{{ quoteRole }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isStock }}">
+    <main style="max-width:1320px;margin:0 auto;padding:40px 28px 88px">
+      <h1 style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:clamp(32px,4vw,52px);letter-spacing:-.025em;line-height:1.04;margin:0 0 12px">Nos voitures</h1>
+      <p style="margin:0 0 32px;font-size:17px;line-height:1.55;max-width:58ch;color:rgba(5,39,71,.75)">Découvrez notre sélection de <strong style="font-weight:600">véhicules d'occasion disponibles immédiatement.</strong> Tous nos modèles sont <strong style="font-weight:600">inspectés</strong> et prêts à prendre la route.</p>
+
+      <div style="display:grid;grid-template-columns:290px minmax(0,1fr);gap:28px;align-items:start">
+        <aside style="background:#fff;border-radius:18px;padding:26px 24px;position:sticky;top:96px">
+          <p style="margin:0 0 20px;font-family:'Host Grotesk',sans-serif;font-weight:600;font-size:18px">Filtres</p>
+          <p style="margin:0 0 10px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(5,39,71,.55)">Carburant</p>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px">
+            <sc-for list="{{ fuelChips }}" as="f" hint-placeholder-count="3">
+              <button type="button" onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</button>
+            </sc-for>
+          </div>
+          <p style="margin:0 0 10px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(5,39,71,.55)">Boîte de vitesses</p>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px">
+            <sc-for list="{{ gearChips }}" as="g" hint-placeholder-count="3">
+              <button type="button" onClick="{{ g.pick }}" style="{{ g.style }}">{{ g.label }}</button>
+            </sc-for>
+          </div>
+          <p style="margin:0 0 10px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(5,39,71,.55)">Budget max · {{ budgetLabel }}</p>
+          <input type="range" min="5000" max="20000" step="500" value="{{ maxPrice }}" onChange="{{ setMaxPrice }}" onInput="{{ setMaxPrice }}" style="width:100%;margin-bottom:24px">
+          <button type="button" onClick="{{ reset }}" style="width:100%;background:transparent;border:1px solid rgba(5,39,71,.22);border-radius:10px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;text-align:left" style-hover="border-color:#052747;background:#FFDA1F">Réinitialiser les filtres</button>
+        </aside>
+
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap">
+            <p style="margin:0;font-size:15px;font-weight:600">{{ resultLabel }}</p>
+            <label style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(5,39,71,.7)">
+              Trier par
+              <select value="{{ sort }}" onChange="{{ setSort }}" style="border:1px solid rgba(5,39,71,.22);border-radius:10px;padding:10px 12px;font-size:14px;background:#fff">
+                <sc-for list="{{ sortOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for>
+              </select>
+            </label>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+            <sc-for list="{{ filtered }}" as="c" hint-placeholder-count="3">
+              <article onClick="{{ c.open }}" style="background:#fff;border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(5,39,71,.07)" style-hover="box-shadow:0 18px 36px rgba(5,39,71,.16)">
+                <div style="position:relative;aspect-ratio:4/3;background:#A2D2FF">
+                  <sc-if value="{{ c.hasPhoto }}" hint-placeholder-val="{{ true }}">
+                    <img src="{{ c.cover }}" alt="{{ c.title }}" style="width:100%;height:100%;object-fit:cover">
+                  </sc-if>
+                  <sc-if value="{{ c.noPhoto }}">
+                    <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:rgba(5,39,71,.65)">Photo à fournir</span>
+                  </sc-if>
+                  <div style="position:absolute;top:12px;left:12px;display:flex;gap:6px;flex-wrap:wrap">
+                    <sc-for list="{{ c.badges }}" as="b" hint-placeholder-count="1">
+                      <span style="background:#FFDA1F;border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;letter-spacing:.04em">{{ b }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="padding:20px 20px 22px;flex:1;display:flex;flex-direction:column">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px">
+                    <h3 style="font-family:'Host Grotesk',sans-serif;font-weight:600;font-size:20px;line-height:1.15;margin:0">{{ c.title }}</h3>
+                    <p style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:20px;margin:0;white-space:nowrap">{{ c.priceLabel }}</p>
+                  </div>
+                  <p style="margin:0 0 18px;font-size:14px;color:rgba(5,39,71,.6)">{{ c.subtitle }}</p>
+                  <div style="margin-top:auto;display:flex;flex-wrap:wrap;gap:6px">
+                    <sc-for list="{{ c.chips }}" as="q" hint-placeholder-count="4">
+                      <span style="background:#EEF5FD;border-radius:999px;padding:7px 13px;font-size:13px;font-weight:500">{{ q }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+          <sc-if value="{{ noResults }}">
+            <div style="background:#fff;border-radius:16px;padding:40px;text-align:left">
+              <p style="margin:0 0 10px;font-family:'Host Grotesk',sans-serif;font-weight:600;font-size:21px">Aucun véhicule ne correspond.</p>
+              <p style="margin:0 0 22px;font-size:16px;color:rgba(5,39,71,.7)">Dites-nous ce que vous cherchez : Autodan fait la recherche pour vous.</p>
+              <button type="button" onClick="{{ goContact }}" style="background:#052747;color:#fff;border:0;border-radius:999px;padding:14px 26px;font-size:15px;font-weight:600;cursor:pointer;text-align:left" style-hover="background:#0a4d8c">Lancer une recherche personnalisée</button>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isCar }}">
+    <main style="max-width:1320px;margin:0 auto;padding:28px 28px 88px">
+      <button type="button" onClick="{{ goStock }}" style="background:none;border:0;padding:0;margin:0 0 20px;font-size:14px;font-weight:500;color:rgba(5,39,71,.65);cursor:pointer" style-hover="color:#052747">← Toutes nos voitures</button>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:28px;align-items:start">
+        <div>
+          <div style="background:#fff;border-radius:20px;overflow:hidden">
+            <div style="position:relative;aspect-ratio:16/10;background:#A2D2FF">
+              <sc-if value="{{ carHasPhoto }}" hint-placeholder-val="{{ true }}">
+                <img src="{{ carPhoto }}" alt="{{ carTitle }}" style="width:100%;height:100%;object-fit:cover">
+              </sc-if>
+              <sc-if value="{{ carNoPhoto }}">
+                <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:rgba(5,39,71,.65)">Photos à fournir</span>
+              </sc-if>
+              <div style="position:absolute;top:16px;left:16px;display:flex;gap:6px;flex-wrap:wrap">
+                <sc-for list="{{ carBadges }}" as="b" hint-placeholder-count="2">
+                  <span style="background:#FFDA1F;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700">{{ b }}</span>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;padding:12px;flex-wrap:wrap">
+              <sc-for list="{{ carThumbs }}" as="t" hint-placeholder-count="4">
+                <button type="button" onClick="{{ t.select }}" style="{{ t.style }}">
+                  <img src="{{ t.src }}" alt="" style="width:92px;aspect-ratio:4/3;object-fit:cover;border-radius:8px">
+                </button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:20px;padding:32px 30px;margin-top:20px">
+            <h2 style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.02em;margin:0 0 20px">Caractéristiques</h2>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px">
+              <sc-for list="{{ carSpecs }}" as="s" hint-placeholder-count="8">
+                <div style="background:#EEF5FD;border-radius:12px;padding:16px">
+                  <p style="margin:0 0 5px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(5,39,71,.55)">{{ s.label }}</p>
+                  <p style="margin:0;font-family:'Host Grotesk',sans-serif;font-weight:600;font-size:18px">{{ s.value }}</p>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:20px;padding:32px 30px;margin-top:20px">
+            <h2 style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.02em;margin:0 0 16px">Description</h2>
+            <p style="margin:0 0 12px;font-size:17px;font-weight:600;line-height:1.5">{{ carIntro }}</p>
+            <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(5,39,71,.78)">{{ carDescription }}</p>
+          </div>
+
+          <sc-if value="{{ hasEquipment }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#fff;border-radius:20px;padding:32px 30px;margin-top:20px">
+              <h2 style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.02em;margin:0 0 20px">Options & équipements</h2>
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <sc-for list="{{ carEquipment }}" as="g" hint-placeholder-count="3">
+                  <div>
+                    <p style="margin:0 0 10px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(5,39,71,.55)">{{ g.group }}</p>
+                    <div style="display:flex;flex-wrap:wrap;gap:7px">
+                      <sc-for list="{{ g.items }}" as="i" hint-placeholder-count="6">
+                        <span style="background:#EEF5FD;border-radius:999px;padding:8px 14px;font-size:13.5px">{{ i }}</span>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+
+        <aside style="position:sticky;top:96px;display:flex;flex-direction:column;gap:16px">
+          <div style="background:#fff;border-radius:20px;padding:28px 26px">
+            <h1 style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:30px;letter-spacing:-.02em;line-height:1.08;margin:0 0 6px">{{ carTitle }}</h1>
+            <p style="margin:0 0 18px;font-size:15px;color:rgba(5,39,71,.65)">{{ carSubtitle }}</p>
+            <p style="margin:0 0 4px;font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:38px;letter-spacing:-.02em">{{ carPrice }}</p>
+            <p style="margin:0 0 22px;font-size:13px;color:rgba(5,39,71,.6)">Prix affiché TTC, frais de dossier inclus</p>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <a href="{{ telHref }}" style="background:#052747;color:#fff;border-radius:10px;padding:16px 20px;font-size:15px;font-weight:600;display:block" style-hover="background:#0a4d8c;color:#fff">Appeler {{ tel }}</a>
+              <a href="{{ mailHref }}" style="border:1px solid rgba(5,39,71,.25);border-radius:10px;padding:15px 20px;font-size:15px;font-weight:600;display:block" style-hover="border-color:#052747;background:#FFDA1F">Écrire un e-mail</a>
+            </div>
+          </div>
+          <div style="background:#A2D2FF;border-radius:20px;padding:26px 24px">
+            <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+              <form onSubmit="{{ send }}" style="display:flex;flex-direction:column;gap:12px">
+                <p style="margin:0 0 4px;font-family:'Host Grotesk',sans-serif;font-weight:600;font-size:18px">Poser une question</p>
+                <input type="text" placeholder="Votre nom" required style="border:0;border-radius:10px;padding:13px 14px;font-size:15px;background:#fff">
+                <input type="tel" placeholder="Votre téléphone" required style="border:0;border-radius:10px;padding:13px 14px;font-size:15px;background:#fff">
+                <textarea rows="3" placeholder="Votre message" style="border:0;border-radius:10px;padding:13px 14px;font-size:15px;background:#fff;resize:vertical"></textarea>
+                <button type="submit" style="background:#052747;color:#fff;border:0;border-radius:10px;padding:15px 18px;font-size:15px;font-weight:600;cursor:pointer;text-align:left" style-hover="background:#0a4d8c">Envoyer ma question</button>
+              </form>
+            </sc-if>
+            <sc-if value="{{ sent }}">
+              <div>
+                <p style="margin:0 0 8px;font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:20px">Message envoyé.</p>
+                <p style="margin:0;font-size:15px;line-height:1.5">Autodan vous rappelle au plus vite. Pour une réponse immédiate : {{ tel }}.</p>
+              </div>
+            </sc-if>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isAbout }}">
+    <main style="max-width:1320px;margin:0 auto;padding:40px 28px 88px">
+      <h1 style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:clamp(32px,4vw,52px);letter-spacing:-.025em;line-height:1.04;margin:0 0 28px">Qui sommes-nous ?</h1>
+      <div style="background:#fff;border-radius:20px;overflow:hidden;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));margin-bottom:20px">
+        <div style="padding:44px 40px">
+          <p style="margin:0 0 14px;font-size:19px;line-height:1.55;font-weight:500">{{ aboutLead }}</p>
+          <p style="margin:0 0 20px;font-size:16px;line-height:1.65;color:rgba(5,39,71,.75)">{{ aboutBody }}</p>
+          <p style="margin:0;background:#FFDA1F;border-radius:12px;padding:18px 20px;font-size:15px;line-height:1.5;font-weight:500">{{ aboutClaim }}</p>
+        </div>
+        <img src="uploads/raph.png" alt="Raphaël, fondateur d'Autodan" style="width:100%;height:100%;min-height:340px;object-fit:cover;object-position:50% 30%">
+      </div>
+
+      <h2 style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:clamp(26px,3vw,38px);letter-spacing:-.02em;margin:48px 0 20px">Nos services</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px">
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+          <div style="background:#fff;border-radius:16px;padding:28px 26px">
+            <span style="display:inline-flex;width:34px;height:34px;border-radius:999px;background:#A2D2FF;align-items:center;justify-content:center;font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:14px;margin-bottom:16px">{{ s.num }}</span>
+            <h3 style="font-family:'Host Grotesk',sans-serif;font-weight:600;font-size:20px;margin:0 0 8px">{{ s.title }}</h3>
+            <p style="margin:0;font-size:15px;line-height:1.55;color:rgba(5,39,71,.72)">{{ s.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="background:#fff;border-radius:20px;padding:44px 40px;margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px;align-items:center">
+        <p style="font-family:'Host Grotesk',sans-serif;font-weight:500;font-size:clamp(20px,2.2vw,28px);line-height:1.35;letter-spacing:-.01em;margin:0">« {{ quote }} »</p>
+        <div style="display:flex;align-items:center;gap:14px;justify-self:start">
+          <img src="{{ quotePhoto }}" alt="{{ quoteName }}" style="width:52px;height:52px;border-radius:999px;object-fit:cover">
+          <div>
+            <p style="margin:0;font-size:15px;font-weight:600">{{ quoteName }}</p>
+            <p style="margin:0;font-size:13px;color:rgba(5,39,71,.6)">{{ quoteRole }}</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isContact }}">
+    <main style="max-width:1320px;margin:0 auto;padding:40px 28px 88px">
+      <h1 style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:clamp(32px,4vw,52px);letter-spacing:-.025em;line-height:1.04;margin:0 0 28px">Contactez-nous</h1>
+      <div style="display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:20px;align-items:start">
+        <div style="background:#fff;border-radius:20px;padding:34px 30px">
+          <p style="margin:0 0 20px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(5,39,71,.55)">Venez nous rencontrer</p>
+          <div style="display:flex;flex-direction:column;gap:18px">
+            <div>
+              <p style="margin:0 0 4px;font-size:13px;color:rgba(5,39,71,.6)">Adresse</p>
+              <p style="margin:0;font-size:17px;font-weight:500;line-height:1.4">{{ address }}</p>
+            </div>
+            <div>
+              <p style="margin:0 0 4px;font-size:13px;color:rgba(5,39,71,.6)">Téléphone</p>
+              <a href="{{ telHref }}" style="font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:26px;letter-spacing:-.01em">{{ tel }}</a>
+            </div>
+            <div>
+              <p style="margin:0 0 4px;font-size:13px;color:rgba(5,39,71,.6)">E-mail</p>
+              <a href="{{ mailHref }}" style="font-size:16px;font-weight:500">{{ mail }}</a>
+            </div>
+          </div>
+          <p style="margin:28px 0 12px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(5,39,71,.55)">Nos annonces</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ social }}" as="s" hint-placeholder-count="4">
+              <a href="{{ s.url }}" target="_blank" rel="noopener" style="background:#EEF5FD;border-radius:999px;padding:10px 16px;font-size:14px;font-weight:500" style-hover="background:#FFDA1F">{{ s.name }}</a>
+            </sc-for>
+          </div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:34px 30px">
+          <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+            <form onSubmit="{{ send }}" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+              <label style="display:flex;flex-direction:column;gap:7px">
+                <span style="font-size:13px;font-weight:500;color:rgba(5,39,71,.7)">Nom et prénom</span>
+                <input type="text" required style="border:1px solid rgba(5,39,71,.22);border-radius:10px;padding:13px 14px;font-size:15px">
+              </label>
+              <label style="display:flex;flex-direction:column;gap:7px">
+                <span style="font-size:13px;font-weight:500;color:rgba(5,39,71,.7)">Téléphone</span>
+                <input type="tel" style="border:1px solid rgba(5,39,71,.22);border-radius:10px;padding:13px 14px;font-size:15px">
+              </label>
+              <label style="display:flex;flex-direction:column;gap:7px">
+                <span style="font-size:13px;font-weight:500;color:rgba(5,39,71,.7)">E-mail</span>
+                <input type="email" required style="border:1px solid rgba(5,39,71,.22);border-radius:10px;padding:13px 14px;font-size:15px">
+              </label>
+              <label style="display:flex;flex-direction:column;gap:7px">
+                <span style="font-size:13px;font-weight:500;color:rgba(5,39,71,.7)">Votre demande</span>
+                <select style="border:1px solid rgba(5,39,71,.22);border-radius:10px;padding:13px 14px;font-size:15px;background:#fff">
+                  <option>Un véhicule en stock</option>
+                  <option>Recherche personnalisée</option>
+                  <option>Vendre / faire estimer ma voiture</option>
+                  <option>Dépôt-vente</option>
+                  <option>Autre</option>
+                </select>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:7px;grid-column:1 / -1">
+                <span style="font-size:13px;font-weight:500;color:rgba(5,39,71,.7)">Message</span>
+                <textarea rows="5" style="border:1px solid rgba(5,39,71,.22);border-radius:10px;padding:13px 14px;font-size:15px;resize:vertical"></textarea>
+              </label>
+              <button type="submit" style="grid-column:1 / -1;justify-self:start;background:#052747;color:#fff;border:0;border-radius:999px;padding:16px 30px;font-size:15px;font-weight:600;cursor:pointer;text-align:left" style-hover="background:#0a4d8c">Envoyer ma demande</button>
+            </form>
+          </sc-if>
+          <sc-if value="{{ sent }}">
+            <div style="background:#A2D2FF;border-radius:16px;padding:40px 34px">
+              <p style="margin:0 0 10px;font-family:'Host Grotesk',sans-serif;font-weight:700;font-size:26px;letter-spacing:-.02em">Message envoyé.</p>
+              <p style="margin:0;font-size:16px;line-height:1.55">Autodan vous répond sous 24 h ouvrées. Pour une réponse immédiate, appelez le {{ tel }}.</p>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <footer style="background:#052747;color:#fff">
+    <div style="max-width:1320px;margin:0 auto;padding:52px 28px 28px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px;align-items:start">
+        <div>
+          <img src="{{ logo }}" alt="Autodan" style="height:30px;width:auto;background:#fff;border-radius:8px;padding:7px 11px">
+          <p style="margin:20px 0 0;font-family:'Host Grotesk',sans-serif;font-weight:600;font-size:20px;line-height:1.25;max-width:18ch;letter-spacing:-.01em">Achat, vente et recherche de véhicules à Nice.</p>
+        </div>
+        <div>
+          <p style="margin:0 0 14px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#A2D2FF">Nous trouver</p>
+          <p style="margin:0 0 10px;font-size:15px;line-height:1.5">{{ address }}</p>
+          <a href="{{ telHref }}" style="color:#fff;font-size:15px;display:block;margin-bottom:6px" style-hover="color:#FFDA1F">{{ tel }}</a>
+          <a href="{{ mailHref }}" style="color:#fff;font-size:15px" style-hover="color:#FFDA1F">{{ mail }}</a>
+        </div>
+        <div>
+          <p style="margin:0 0 14px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#A2D2FF">Navigation</p>
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+            <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
+              <button type="button" onClick="{{ n.go }}" style="background:none;border:0;padding:0;color:#fff;font-size:15px;cursor:pointer;text-align:left" style-hover="color:#FFDA1F">{{ n.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <p style="margin:0 0 14px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#A2D2FF">Nos annonces</p>
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+            <sc-for list="{{ social }}" as="s" hint-placeholder-count="4">
+              <a href="{{ s.url }}" target="_blank" rel="noopener" style="color:#fff;font-size:15px" style-hover="color:#FFDA1F">{{ s.name }}</a>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      <p style="margin:40px 0 0;padding-top:18px;border-top:1px solid rgba(162,210,255,.28);font-size:12px;color:#A2D2FF">Copyright © 2026 Autodan — Direction C « Catalogue »</p>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1320,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { page: 'home', car: 0, photo: 0, fuel: 'Tous', gearbox: 'Toutes', maxPrice: 20000, sort: 'Prix croissant', sent: false };
+
+  componentDidMount() {
+    if (!window.AUTODAN) window.addEventListener('autodan-data', () => this.forceUpdate(), { once: true });
+  }
+
+  go(page, car) {
+    return (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ page, car: car == null ? this.state.car : car, photo: 0, sent: false }); window.scrollTo(0, 0); };
+  }
+
+  chip(label, active, onPick) {
+    return {
+      label, pick: onPick,
+      style: 'border:1px solid ' + (active ? '#052747' : 'rgba(5,39,71,.2)') +
+        ';background:' + (active ? '#052747' : '#fff') +
+        ';color:' + (active ? '#fff' : '#052747') +
+        ';border-radius:999px;padding:9px 15px;font-size:13.5px;font-weight:500;cursor:pointer;text-align:left'
+    };
+  }
+
+  renderVals() {
+    const D = window.AUTODAN || {};
+    const C = D.contact || {};
+    const raw = D.cars || [];
+    const s = this.state;
+    const euro = (n) => new Intl.NumberFormat('fr-FR').format(n) + ' €';
+
+    const cars = raw.map((c, i) => {
+      const has = !!(c.photos && c.photos.length);
+      return Object.assign({}, c, {
+        hasPhoto: has, noPhoto: !has, cover: has ? c.photos[0] : '',
+        open: this.go('car', i),
+        chips: [c.year, c.km, c.fuel, c.gearbox, c.power].filter(v => v && v !== '—')
+      });
+    });
+
+    let filtered = cars.filter(c =>
+      (s.fuel === 'Tous' || c.fuel === s.fuel) &&
+      (s.gearbox === 'Toutes' || c.gearbox === s.gearbox) &&
+      c.price <= s.maxPrice);
+    filtered = filtered.slice().sort((a, b) =>
+      s.sort === 'Prix décroissant' ? b.price - a.price :
+      s.sort === 'Année récente' ? Number(b.year) - Number(a.year) : a.price - b.price);
+
+    const car = cars[s.car] || {};
+    const photos = car.photos || [];
+    const t = D.testimonial || {};
+    const navDefs = [['home', 'Accueil'], ['stock', 'Véhicules'], ['about', 'À propos'], ['contact', 'Contact']];
+
+    return {
+      logo: D.logo,
+      aboutPhoto: 'uploads/bm_raph.jpg',
+      aboutPhoto2: (raw[0] && raw[0].photos && raw[0].photos[2]) || D.heroPhoto,
+      tel: C.tel, telHref: C.telHref, mail: C.mail, mailHref: C.mailHref, address: C.address,
+      social: D.social || [],
+      nav: navDefs.map(([p, label]) => ({
+        label, go: this.go(p),
+        style: 'border:0;border-radius:999px;padding:10px 16px;white-space:nowrap;font-size:14.5px;font-weight:' + (s.page === p ? '600' : '400') +
+          ';cursor:pointer;text-align:left;background:' + (s.page === p ? '#A2D2FF' : 'transparent') + ';color:#052747'
+      })),
+      goHome: this.go('home'), goStock: this.go('stock'), goAbout: this.go('about'), goContact: this.go('contact'),
+      isHome: s.page === 'home', isStock: s.page === 'stock', isCar: s.page === 'car',
+      isAbout: s.page === 'about', isContact: s.page === 'contact',
+      reasons: (D.reasons || []).map((r, i) => Object.assign({ num: '0' + (i + 1) }, r)),
+      services: (D.services || []).map((x, i) => Object.assign({ num: '0' + (i + 1) }, x)),
+      aboutLead: (D.about || {}).lead, aboutBody: (D.about || {}).body, aboutClaim: (D.about || {}).claim,
+      quote: t.quote, quoteName: t.name, quoteRole: t.role, quotePhoto: t.photo,
+      cars, filtered, carCount: cars.length, filteredCount: filtered.length,
+      noResults: filtered.length === 0,
+      resultLabel: filtered.length + (filtered.length > 1 ? ' véhicules disponibles' : ' véhicule disponible'),
+      fuel: s.fuel, gearbox: s.gearbox, sort: s.sort, maxPrice: s.maxPrice,
+      budgetLabel: euro(s.maxPrice),
+      fuelOptions: ['Tous', 'Essence', 'Diesel'],
+      gearboxOptions: ['Toutes', 'Manuelle', 'Automatique'],
+      sortOptions: ['Prix croissant', 'Prix décroissant', 'Année récente'],
+      setFuel: (e) => this.setState({ fuel: e.target.value }),
+      setGearbox: (e) => this.setState({ gearbox: e.target.value }),
+      setSort: (e) => this.setState({ sort: e.target.value }),
+      setMaxPrice: (e) => this.setState({ maxPrice: Number(e.target.value) }),
+      fuelChips: ['Tous', 'Essence', 'Diesel'].map(f => this.chip(f, s.fuel === f, () => this.setState({ fuel: f }))),
+      gearChips: ['Toutes', 'Manuelle', 'Automatique'].map(g => this.chip(g, s.gearbox === g, () => this.setState({ gearbox: g }))),
+      reset: () => this.setState({ fuel: 'Tous', gearbox: 'Toutes', maxPrice: 20000 }),
+      carTitle: car.title, carSubtitle: car.subtitle, carPrice: car.priceLabel,
+      carBadges: car.badges || [], carIntro: car.intro, carDescription: car.description,
+      carEquipment: car.equipment || [], hasEquipment: (car.equipment || []).length > 0,
+      carHasPhoto: photos.length > 0, carNoPhoto: photos.length === 0,
+      carPhoto: photos[s.photo] || photos[0] || '',
+      carThumbs: photos.map((src, i) => ({
+        src, select: () => this.setState({ photo: i }),
+        style: 'padding:0;border:2px solid ' + (i === s.photo ? '#052747' : 'transparent') + ';border-radius:10px;background:none;cursor:pointer;display:block;line-height:0'
+      })),
+      carSpecs: [
+        { label: 'Année', value: car.year }, { label: 'Marque', value: car.brandName },
+        { label: 'Modèle', value: car.model }, { label: 'Carburant', value: car.fuel },
+        { label: 'Puissance', value: car.power }, { label: 'Kilométrage', value: car.km },
+        { label: 'Boîte', value: car.gearbox }, { label: 'Couleur', value: car.color }
+      ],
+      sent: s.sent, notSent: !s.sent,
+      send: (e) => { e.preventDefault(); this.setState({ sent: true }); }
+    };
+  }
+}
+
+</script>
+</body>
+</html>

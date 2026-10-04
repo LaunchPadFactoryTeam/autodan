@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/modernist-45267cd3-6a3d-40aa-9b3a-850096fb0ff2/styles.css">
+  <script src="_ds/modernist-45267cd3-6a3d-40aa-9b3a-850096fb0ff2/_ds_bundle.js"></script>
+  <script src="autodan-data.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@200;300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #FAF9F7; color: #0A253F; font-family: 'Archivo', system-ui, sans-serif; font-weight: 300; -webkit-font-smoothing: antialiased; }
+    * { box-sizing: border-box; }
+    a { color: #8A6E12; text-decoration: none; border-bottom: 1px solid currentColor; }
+    a:hover { color: #0A253F; }
+    ::selection { background: #E3C25F; color: #06182B; }
+    :focus-visible { outline: 1px solid #E3C25F; outline-offset: 3px; }
+  </style>
+</helmet>
+
+<div style="min-height:100vh;background:#FAF9F7">
+
+  <header style="background:#06182B;color:#FAF9F7">
+    <div style="max-width:1080px;margin:0 auto;padding:72px 48px 64px">
+      <p style="margin:0 0 36px;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:#E3C25F">Chantier 2 &nbsp;·&nbsp; Note technique</p>
+      <h1 style="font-weight:200;font-size:clamp(36px,5.4vw,76px);line-height:1;letter-spacing:-.035em;margin:0 0 32px;max-width:22ch">Créer une fiche véhicule <span style="font-weight:600">sans toucher au site</span>.</h1>
+      <p style="margin:0;font-size:18px;line-height:1.75;max-width:62ch;color:rgba(250,249,247,.76)">Tu proposais deux pistes : récupérer automatiquement l'annonce Leboncoin, ou un formulaire Tally dont chaque question correspond à un champ de la fiche produit. Tu en ajoutes une troisième — coller un texte déjà consolidé par un LLM. Voici ce que valent les trois, et pourquoi je retiens les deux dernières.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:rgba(250,249,247,.16);margin-top:48px">
+        <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+          <div style="background:#06182B;padding:22px 24px 26px">
+            <p style="margin:0 0 8px;font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(250,249,247,.5)">{{ f.label }}</p>
+            <p style="margin:0;font-size:23px;font-weight:300;letter-spacing:-.02em">{{ f.value }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width:1080px;margin:0 auto;padding:0 48px">
+
+    <section style="padding:80px 0 0">
+      <p style="margin:0 0 20px;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:#8A6E12">Verdict en une phrase</p>
+      <p style="margin:0 0 56px;font-weight:200;font-size:clamp(26px,3.4vw,44px);line-height:1.18;letter-spacing:-.03em;max-width:36ch">Le <span style="font-weight:600">formulaire Tally</span> comme socle, le <span style="font-weight:600">collage de texte</span> comme raccourci. Le scraping, on l'abandonne.</p>
+      <p style="margin:0 0 80px;font-size:17.5px;line-height:1.8;max-width:70ch;color:rgba(10,37,63,.78)">Ta proposition règle le problème que le scraping créait. Le scraping dépend d'un site tiers dont le code change sans préavis et dont les conditions d'utilisation interdisent l'extraction automatisée : le jour où il casse, ton client ne peut plus publier. Faire passer l'annonce par un LLM avant de la coller donne le même gain de temps sans aucune dépendance technique — et quand il n'a ni assistant ni annonce déjà écrite, les douze questions du formulaire sont toujours là.</p>
+    </section>
+
+    <section>
+      <sc-for list="{{ solutions }}" as="s" hint-placeholder-count="2">
+        <article style="border-top:1px solid rgba(10,37,63,.16);padding:56px 0 64px">
+          <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:22px">
+            <span style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#8A6E12">{{ s.ref }}</span>
+            <span style="{{ s.verdictStyle }}">{{ s.verdict }}</span>
+          </div>
+          <h2 style="font-weight:200;font-size:clamp(28px,3.6vw,48px);line-height:1.04;letter-spacing:-.03em;margin:0 0 20px;max-width:26ch">{{ s.title }}</h2>
+          <p style="margin:0 0 44px;font-size:18px;line-height:1.78;max-width:66ch;color:rgba(10,37,63,.78)">{{ s.body }}</p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:rgba(10,37,63,.14);margin-bottom:48px">
+            <sc-for list="{{ s.metrics }}" as="m" hint-placeholder-count="4">
+              <div style="background:#FAF9F7;padding:24px 24px 28px">
+                <p style="margin:0 0 10px;font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(10,37,63,.5)">{{ m.label }}</p>
+                <p style="margin:0;font-size:22px;font-weight:300;letter-spacing:-.02em">{{ m.value }}</p>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:56px">
+            <div>
+              <p style="margin:0 0 18px;padding-bottom:12px;border-bottom:1px solid #E3C25F;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase">Le geste de ton client</p>
+              <ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:12px">
+                <sc-for list="{{ s.steps }}" as="st" hint-placeholder-count="3">
+                  <li style="font-size:16px;line-height:1.6;color:rgba(10,37,63,.8)">{{ st }}</li>
+                </sc-for>
+              </ol>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:32px">
+              <div>
+                <p style="margin:0 0 14px;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#8A6E12">Ce que ça règle</p>
+                <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px">
+                  <sc-for list="{{ s.pros }}" as="p" hint-placeholder-count="3">
+                    <li style="font-size:16px;line-height:1.6;color:rgba(10,37,63,.8)">{{ p }}</li>
+                  </sc-for>
+                </ul>
+              </div>
+              <div>
+                <p style="margin:0 0 14px;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(10,37,63,.5)">Ce qui coince</p>
+                <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px">
+                  <sc-for list="{{ s.cons }}" as="c" hint-placeholder-count="3">
+                    <li style="font-size:16px;line-height:1.6;color:rgba(10,37,63,.68)">{{ c }}</li>
+                  </sc-for>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <sc-if value="{{ s.hasWarning }}">
+            <p style="margin:44px 0 0;background:#F1EEE8;border-left:2px solid #8A6E12;padding:24px 28px;font-size:16.5px;line-height:1.7;max-width:76ch">{{ s.warning }}</p>
+          </sc-if>
+
+          <sc-if value="{{ showTech }}">
+            <p style="margin:32px 0 0;padding:20px 24px;background:#06182B;color:rgba(250,249,247,.9);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;line-height:1.7">{{ s.tech }}</p>
+          </sc-if>
+        </article>
+      </sc-for>
+    </section>
+
+    <section style="border-top:1px solid rgba(10,37,63,.16);padding:72px 0 0">
+      <p style="margin:0 0 20px;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:#8A6E12">Option B en détail</p>
+      <h2 style="font-weight:200;font-size:clamp(28px,3.6vw,48px);line-height:1.04;letter-spacing:-.03em;margin:0 0 20px">Le formulaire, <span style="font-weight:600">question par question</span></h2>
+      <p style="margin:0 0 48px;font-size:17.5px;line-height:1.78;max-width:68ch;color:rgba(10,37,63,.78)">Chaque question correspond à un champ précis de la fiche produit. Les listes déroulantes évitent les fautes de frappe et garantissent que les filtres du site fonctionnent. Douze questions, dont deux facultatives.</p>
+
+      <div style="border-top:1px solid rgba(10,37,63,.16)">
+        <div style="display:grid;grid-template-columns:40px minmax(0,1.1fr) minmax(0,1fr) 150px;gap:24px;padding:14px 0;border-bottom:1px solid rgba(10,37,63,.16)">
+          <span style="font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(10,37,63,.45)">N°</span>
+          <span style="font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(10,37,63,.45)">Question posée</span>
+          <span style="font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(10,37,63,.45)">Champ de la fiche</span>
+          <span style="font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(10,37,63,.45)">Type</span>
+        </div>
+        <sc-for list="{{ fields }}" as="f" hint-placeholder-count="12">
+          <div style="display:grid;grid-template-columns:40px minmax(0,1.1fr) minmax(0,1fr) 150px;gap:24px;align-items:baseline;padding:18px 0;border-bottom:1px solid rgba(10,37,63,.1)">
+            <span style="font-size:12px;font-weight:500;color:#8A6E12">{{ f.num }}</span>
+            <span style="font-size:16.5px;line-height:1.5;font-weight:400">{{ f.question }}</span>
+            <span style="font-size:14px;line-height:1.5;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:rgba(10,37,63,.72)">{{ f.field }}</span>
+            <span style="font-size:13px;line-height:1.5;color:rgba(10,37,63,.62)">{{ f.type }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin:32px 0 0;font-size:16.5px;line-height:1.75;max-width:72ch;color:rgba(10,37,63,.75)">Les équipements posent la seule vraie question de conception. Une liste à cocher de soixante lignes est pénible sur un téléphone. Ton annonce Fiesta donne la réponse : elle est déjà rangée en quatre familles — intérieur et confort, extérieur, conduite, sécurité. Je reprends ces quatre groupes, avec les douze options les plus fréquentes dans chacun, plus un champ libre pour le reste. Même découpage que les clés <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14.5px">equipment.*</span> du collage.</p>
+    </section>
+
+    <section style="border-top:1px solid rgba(10,37,63,.16);padding:72px 0 0">
+      <p style="margin:0 0 20px;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:#8A6E12">Option C en détail</p>
+      <h2 style="font-weight:200;font-size:clamp(28px,3.6vw,48px);line-height:1.04;letter-spacing:-.03em;margin:0 0 20px;max-width:30ch">Deux portes à l'entrée, <span style="font-weight:600">un seul formulaire derrière</span></h2>
+      <p style="margin:0 0 44px;font-size:17.5px;line-height:1.78;max-width:68ch;color:rgba(10,37,63,.78)">C'est la bonne façon de se passer de Leboncoin. Le travail de structuration passe du site au LLM, et le site ne garde que la partie qu'il sait faire sans jamais casser : lire des lignes <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px">clé : valeur</span> et les afficher pour relecture.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(10,37,63,.14);margin-bottom:56px">
+        <div style="background:#FAF9F7;padding:30px 28px 36px;display:flex;flex-direction:column;gap:14px">
+          <p style="margin:0;font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(10,37,63,.5)">Porte 1</p>
+          <h3 style="font-weight:300;font-size:24px;line-height:1.15;letter-spacing:-.02em;margin:0">Remplir les informations champ par champ</h3>
+          <p style="margin:0;font-size:15px;line-height:1.7;color:rgba(10,37,63,.72)">Le formulaire Tally de l'option B. Treize questions, listes déroulantes, cases à cocher. Le chemin de référence, celui qui marche même sans réseau mental disponible.</p>
+        </div>
+        <div style="background:#06182B;color:#FAF9F7;padding:30px 28px 36px;display:flex;flex-direction:column;gap:14px">
+          <p style="margin:0;font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#E3C25F">Porte 2</p>
+          <h3 style="font-weight:300;font-size:24px;line-height:1.15;letter-spacing:-.02em;margin:0">Coller le contenu</h3>
+          <p style="margin:0;font-size:15px;line-height:1.7;color:rgba(250,249,247,.78)">Deux gestes : déposer les photos, coller le bloc de texte. Il a demandé à un LLM de mettre son annonce au format attendu — ou il l'écrit lui-même, le format est lisible à l'œil.</p>
+        </div>
+      </div>
+
+      <p style="margin:0 0 18px;padding-bottom:12px;border-bottom:1px solid #E3C25F;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase">Le format attendu</p>
+      <p style="margin:0 0 24px;font-size:16.5px;line-height:1.75;max-width:72ch;color:rgba(10,37,63,.75)">Les clés sont celles du site, à l'identique. Une clé par ligne, les listes en tirets, l'ordre n'a aucune importance et une clé absente ne bloque rien. Tiré de l'annonce Ford Fiesta que tu m'as envoyée :</p>
+      <pre style="margin:0 0 44px;background:#F1EEE8;border-left:2px solid #8A6E12;padding:26px 28px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;line-height:1.85;white-space:pre-wrap;overflow-x:auto">brandName : Ford
+model : Fiesta
+subtitle : 1.0 EcoBoost Hybrid 125 ch
+year : 2020
+month : 12
+price : 13900
+km : 48000
+fuel : Essence micro-hybride (mHEV)
+gearbox : Manuelle 6 rapports
+power : 125
+color : Gris magnétique métallisé
+seats : 5
+intro : Première main, suivi d'entretien complet, révision et contrôle technique de 2026.
+highlights :
+- Première main
+- Révision complète 04/2026
+- Contrôle technique 05/2026
+equipment.interieur :
+- Écran tactile couleur Ford SYNC
+- Apple CarPlay / Android Auto
+- Climatisation automatique
+- Démarrage sans clé
+equipment.exterieur :
+- Jantes alliage gris anthracite 17 pouces
+- Vitres arrière surteintées
+- Feux arrière à LED
+equipment.conduite :
+- Radars de recul
+- Régulateur et limiteur de vitesse
+- Aide au maintien dans la voie
+equipment.securite :
+- ABS, ESP
+- Airbags frontaux, latéraux, rideaux
+- Fixations Isofix
+description :
+Très belle Ford Fiesta de décembre 2020 dans un excellent état général
+intérieur comme extérieur. Véhicule visible sur rendez-vous uniquement,
+possibilité de livraison à domicile.</pre>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;margin-bottom:48px">
+        <div>
+          <p style="margin:0 0 14px;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#8A6E12">Ce que le site tolère</p>
+          <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px">
+            <sc-for list="{{ tolerances }}" as="t" hint-placeholder-count="5">
+              <li style="font-size:16px;line-height:1.6;color:rgba(10,37,63,.8)">{{ t }}</li>
+            </sc-for>
+          </ul>
+        </div>
+        <div>
+          <p style="margin:0 0 14px;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(10,37,63,.5)">Les garde-fous</p>
+          <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px">
+            <sc-for list="{{ guards }}" as="g" hint-placeholder-count="4">
+              <li style="font-size:16px;line-height:1.6;color:rgba(10,37,63,.68)">{{ g }}</li>
+            </sc-for>
+          </ul>
+        </div>
+      </div>
+
+      <p style="margin:0 0 18px;padding-bottom:12px;border-bottom:1px solid #E3C25F;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase">La consigne qu'il garde dans ses notes</p>
+      <p style="margin:0 0 24px;font-size:16.5px;line-height:1.75;max-width:72ch;color:rgba(10,37,63,.75)">À coller dans n'importe quel assistant, suivi de son annonce. C'est la pièce qui fait tenir l'ensemble : sans consigne figée, chaque passage par le LLM ressort dans un format légèrement différent.</p>
+      <pre style="margin:0;background:#06182B;color:rgba(250,249,247,.92);padding:26px 28px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;line-height:1.85;white-space:pre-wrap;overflow-x:auto">Reformate l'annonce ci-dessous au format clé : valeur, une clé par ligne,
+dans cet ordre exact et sans rien ajouter :
+
+brandName, model, subtitle, year, month, price, km, fuel, gearbox, power,
+color, seats, intro, highlights, equipment.interieur, equipment.exterieur,
+equipment.conduite, equipment.securite, description
+
+Règles :
+- price et km en chiffres seuls, sans espace, sans € ni km
+- power en chiffres seuls (chevaux DIN)
+- highlights et equipment.* en listes à tirets, un élément par ligne
+- intro : une seule phrase, 120 caractères maximum
+- description : le texte de vente, sans la liste des équipements
+- n'invente aucune information : si elle est absente, omets la clé
+
+Annonce :
+[coller ici]</pre>
+    </section>
+
+    <section style="border-top:1px solid rgba(10,37,63,.16);padding:72px 0 0">
+      <p style="margin:0 0 20px;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:#8A6E12">La combinaison que je recommande</p>
+      <h2 style="font-weight:200;font-size:clamp(28px,3.6vw,48px);line-height:1.04;letter-spacing:-.03em;margin:0 0 48px;max-width:30ch">Un écran de départ à deux choix, et plus rien qui dépende d'un site tiers</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:rgba(10,37,63,.14)">
+        <sc-for list="{{ flow }}" as="s" hint-placeholder-count="4">
+          <div style="background:#FAF9F7;padding:32px 28px 40px">
+            <p style="margin:0 0 20px;font-size:11px;font-weight:500;letter-spacing:.2em;color:#8A6E12">{{ s.num }}</p>
+            <h3 style="font-weight:300;font-size:22px;line-height:1.2;letter-spacing:-.02em;margin:0 0 12px">{{ s.title }}</h3>
+            <p style="margin:0;font-size:15px;line-height:1.7;color:rgba(10,37,63,.72)">{{ s.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin:40px 0 0;font-size:17.5px;line-height:1.8;max-width:72ch;color:rgba(10,37,63,.78)">Les deux portes aboutissent au même endroit : le même écran de relecture, les mêmes champs, le même fichier produit. S'il a déjà rédigé son annonce, il passe par le collage et publie en deux minutes. Sinon il répond aux douze questions. Aucune des deux ne dépend de Leboncoin, donc aucune des deux ne peut tomber en panne un samedi matin.</p>
+    </section>
+
+    <section style="border-top:1px solid rgba(10,37,63,.16);padding:72px 0 0">
+      <p style="margin:0 0 20px;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:#8A6E12">Partie A — Analytics</p>
+      <h2 style="font-weight:200;font-size:clamp(28px,3.6vw,48px);line-height:1.04;letter-spacing:-.03em;margin:0 0 20px">Voir les fiches <span style="font-weight:600">les plus visitées</span></h2>
+      <p style="margin:0 0 44px;font-size:17.5px;line-height:1.78;max-width:68ch;color:rgba(10,37,63,.78)">Trois questions à répondre, pas plus : combien de visiteurs, quelles fiches sont regardées, combien d'appels en sortent. <span style="font-weight:500">Umami</span> fait les trois gratuitement, en français, sans cookie ni bandeau de consentement.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:rgba(10,37,63,.14);margin-bottom:36px">
+        <sc-for list="{{ analytics }}" as="a" hint-placeholder-count="3">
+          <div style="background:#FAF9F7;padding:32px 28px 40px">
+            <p style="margin:0 0 16px;font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(10,37,63,.5)">{{ a.label }}</p>
+            <p style="margin:0 0 12px;font-size:21px;font-weight:500;letter-spacing:-.01em">{{ a.tool }}</p>
+            <p style="margin:0;font-size:15px;line-height:1.7;color:rgba(10,37,63,.72)">{{ a.why }}</p>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin:0;font-size:16.5px;line-height:1.75;max-width:72ch;color:rgba(10,37,63,.75)">Le point important : compter les clics sur « Appeler » et les envois de formulaire comme des évènements nommés. Sans ça on mesure des visites, pas des contacts — et c'est le contact qui intéresse ton client.</p>
+    </section>
+
+    <section style="margin:80px 0 0;background:#06182B;color:#FAF9F7;padding:56px 48px 64px">
+      <p style="margin:0 0 20px;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:#E3C25F">Ce qu'il me faut pour avancer</p>
+      <div style="border-top:1px solid rgba(250,249,247,.2)">
+        <sc-for list="{{ needs }}" as="n" hint-placeholder-count="4">
+          <div style="display:grid;grid-template-columns:48px minmax(0,1fr);gap:20px;padding:22px 0;border-bottom:1px solid rgba(250,249,247,.14)">
+            <span style="font-size:12px;font-weight:500;letter-spacing:.14em;color:#E3C25F">{{ n.num }}</span>
+            <p style="margin:0;font-size:17px;line-height:1.7;color:rgba(250,249,247,.85)">{{ n.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+  <div style="height:88px"></div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:900},&quot;showTech&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Affichage&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const showTech = this.props.showTech ?? true;
+
+    const badge = (bg, color) => 'background:' + bg + ';color:' + color +
+      ';padding:6px 13px;font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase';
+
+    const solutions = [
+      {
+        ref: 'Solution A',
+        verdict: 'Déconseillé seul',
+        verdictStyle: badge('#F1EEE8', '#8A6E12'),
+        title: 'Récupérer automatiquement l’annonce Leboncoin',
+        body: 'Ton client publie son annonce sur Leboncoin comme aujourd’hui, colle le lien dans un champ, et le site va lire la page pour en extraire titre, prix, kilométrage, caractéristiques et photos. Aucune double saisie, aucun nouveau geste à apprendre.',
+        metrics: [
+          { label: 'Coût', value: 'Gratuit à ~5 €/mois' },
+          { label: 'Dev', value: '3 à 4 jours' },
+          { label: 'Publier une fiche', value: '1 min' },
+          { label: 'Fiabilité', value: 'Fragile' }
+        ],
+        steps: [
+          'Publier l’annonce sur Leboncoin comme d’habitude',
+          'Copier le lien de l’annonce',
+          'Le coller dans un champ unique et valider',
+          'Relire la fiche générée avant publication'
+        ],
+        pros: [
+          'Le geste le plus court de toutes les options : un lien, rien d’autre.',
+          'Les photos sont déjà en ligne, rien à re-téléverser.',
+          'Une seule source de vérité : si l’annonce change, la fiche suit.'
+        ],
+        cons: [
+          'Leboncoin protège activement ses pages : détection de robots, rendu JavaScript, blocages par adresse IP.',
+          'Les conditions d’utilisation interdisent l’extraction automatisée. Le risque juridique est faible pour trois voitures, mais il existe.',
+          'Chaque refonte de leur site casse l’extraction, sans avertissement, et ton client se retrouve bloqué.',
+          'Les photos restent hébergées chez eux : si l’annonce expire, les images de ta fiche disparaissent.'
+        ],
+        hasWarning: true,
+        warning: 'C’est le point décisif : une solution qui s’arrête du jour au lendemain, sans que personne ne l’ait touchée, est ingérable pour un client qui ne code pas. S’il veut publier un samedi matin et que l’extraction échoue, il n’a aucun recours.',
+        tech: 'Fetch côté serveur + parseur DOM, ou API non documentée. Rendu JS → navigateur sans interface (Playwright) sur une fonction serverless. Prévoir un cache, un repli manuel et une surveillance du taux d’échec.'
+      },
+      {
+        ref: 'Solution B',
+        verdict: 'Recommandé',
+        verdictStyle: badge('#E3C25F', '#06182B'),
+        title: 'Un formulaire Tally calqué sur la fiche produit',
+        body: 'Un formulaire en français, enregistré sur l’écran d’accueil de son téléphone. Une question par champ de la fiche, dans l’ordre où il a les informations en main, et une zone de dépôt pour les photos. Il valide, la fiche est en ligne.',
+        metrics: [
+          { label: 'Coût', value: 'Gratuit' },
+          { label: 'Dev', value: '1 à 2 jours' },
+          { label: 'Publier une fiche', value: '4 min' },
+          { label: 'Fiabilité', value: 'Totale' }
+        ],
+        steps: [
+          'Ouvrir le raccourci « Ajouter un véhicule » sur son téléphone',
+          'Répondre aux questions : marque, modèle, année, prix, kilométrage…',
+          'Déposer les photos prises avec l’appareil',
+          'Valider — la fiche est en ligne en moins d’une minute'
+        ],
+        pros: [
+          'Rien ne peut casser de l’extérieur : le formulaire t’appartient.',
+          'Les listes déroulantes garantissent des valeurs propres, donc des filtres qui marchent sur le site.',
+          'Les photos sont hébergées avec le site, redimensionnées et compressées automatiquement.',
+          'Faisable debout sur le parking, une main sur le téléphone.',
+          'Les réponses arrivent aussi dans un tableur : modification d’un prix en dix secondes.'
+        ],
+        cons: [
+          'Il saisit les informations une deuxième fois s’il a déjà rédigé son annonce ailleurs.',
+          'Treize questions à remplir, contre un simple lien à coller.'
+        ],
+        hasWarning: false,
+        warning: '',
+        tech: 'Tally free (upload de fichiers inclus, illimité) → webhook → fonction serverless qui écrit un fichier Markdown + images dans le dépôt → reconstruction Netlify. Même champs côté site que autodan-data.js.'
+      },
+      {
+        ref: 'Solution C',
+        verdict: 'Recommandé · ta proposition',
+        verdictStyle: badge('#E3C25F', '#06182B'),
+        title: 'Coller un texte déjà consolidé',
+        body: 'À l’ouverture du formulaire, un choix : « Remplir les informations champ par champ » ou « Coller le contenu ». Dans le second cas il dépose ses photos, colle un bloc de lignes clé : valeur, et le site répartit tout seul les valeurs dans les bons champs. La consolidation, c’est un LLM qui l’a faite à partir de son annonce.',
+        metrics: [
+          { label: 'Coût', value: 'Gratuit' },
+          { label: 'Dev', value: '+1 jour sur B' },
+          { label: 'Publier une fiche', value: '2 min' },
+          { label: 'Fiabilité', value: 'Totale' }
+        ],
+        steps: [
+          'Demander à un assistant de reformater l’annonce avec la consigne enregistrée',
+          'Ouvrir le formulaire et choisir « Coller le contenu »',
+          'Déposer les photos prises avec l’appareil',
+          'Coller le bloc de texte, relire l’écran de vérification, valider'
+        ],
+        pros: [
+          'Remplace le scraping sans en reprendre les risques : le texte arrive du presse-papiers, pas d’un site tiers.',
+          'Le travail de mise en forme est fait par le LLM, pas par ton client ni par du code à maintenir.',
+          'Un format lisible à l’œil nu : il peut corriger une ligne avant de coller, ou écrire le bloc à la main.',
+          'Le parseur est trivial — une quarantaine de lignes — donc rien à surveiller en production.',
+          'Aucun champ nouveau à inventer : les clés sont exactement celles de la fiche produit.'
+        ],
+        cons: [
+          'Dépend d’un geste supplémentaire hors du site : passer par un assistant et coller la bonne consigne.',
+          'Un LLM peut inventer un équipement absent de l’annonce — d’où l’écran de relecture obligatoire.',
+          'Si le format revient abîmé (clés traduites, puces changées), il faut relancer la reformulation.'
+        ],
+        hasWarning: true,
+        warning: 'Ton idée tient précisément parce qu’elle déplace la fragilité au bon endroit. Le scraping met l’incertitude dans le site, là où ton client ne peut rien faire. Le collage la met dans un geste qu’il contrôle : si le bloc est mauvais, il le voit, il relance, il recolle. Et le jour où il n’a pas d’assistant sous la main, la porte 1 est toujours là.',
+        tech: 'Parseur côté serveur : split par lignes, séparation sur le premier « : », clés en camelCase inchangées, lignes commençant par « - » rattachées à la clé courante, nombres nettoyés (espaces, €, km, ch). Tout champ non reconnu est conservé en brut et affiché dans l’écran de relecture.'
+      }
+    ];
+
+    const fields = [
+      { num: '01', question: 'Quelle est la marque ?', field: 'brandName', type: 'Liste déroulante' },
+      { num: '02', question: 'Quel modèle, et quelle version ?', field: 'model + subtitle', type: 'Texte court' },
+      { num: '03', question: 'Mois et année de mise en circulation', field: 'month + year', type: 'Nombre' },
+      { num: '04', question: 'Prix de vente affiché', field: 'price + priceLabel', type: 'Nombre (€)' },
+      { num: '05', question: 'Kilométrage au compteur', field: 'km', type: 'Nombre' },
+      { num: '06', question: 'Carburant', field: 'fuel', type: 'Choix unique' },
+      { num: '07', question: 'Boîte de vitesses', field: 'gearbox', type: 'Choix unique' },
+      { num: '08', question: 'Puissance', field: 'power', type: 'Nombre (ch)' },
+      { num: '09', question: 'Couleur et nombre de places', field: 'color + seats', type: 'Texte court' },
+      { num: '10', question: 'Une phrase qui résume le véhicule', field: 'intro', type: 'Texte court' },
+      { num: '11', question: 'Équipements présents', field: 'equipment', type: 'Cases à cocher par groupe' },
+      { num: '12', question: 'Photos du véhicule (la première sert de visuel principal)', field: 'photos', type: 'Dépôt de fichiers' }
+    ];
+
+    return {
+      showTech,
+      facts: [
+        { label: 'Budget visé', value: '0 €/mois' },
+        { label: 'Stock à gérer', value: '5 à 10' },
+        { label: 'Publier une fiche', value: '< 5 min' },
+        { label: 'Recommandation', value: 'B + C' }
+      ],
+      solutions,
+      fields,
+      tolerances: [
+        'Les accents, les majuscules et les espaces autour du « : ».',
+        'Les nombres écrits comme on les lit : « 13 900 € », « 48 000 km », « 125 ch ».',
+        'Les clés dans n’importe quel ordre, et les lignes vides entre les blocs.',
+        'Une clé manquante : le champ reste vide et il le complète à la main.',
+        'Les puces en « - », « • » ou « · », et les emoji de séparation.'
+      ],
+      guards: [
+        'Écran de relecture obligatoire : chaque valeur lue est affichée et modifiable avant publication.',
+        'Les clés inconnues ne sont pas jetées : elles apparaissent en bas de l’écran, signalées.',
+        'Les champs qui alimentent les filtres du site (carburant, boîte) sont recalés sur les valeurs autorisées.',
+        'Rien n’est publié tant qu’il n’a pas appuyé sur « Mettre en ligne ».'
+      ],
+      flow: [
+        { num: '01', title: 'Il ouvre « Ajouter un véhicule »', body: 'Un raccourci sur l’écran d’accueil de son téléphone. Pas de mot de passe, un lien secret suffit.' },
+        { num: '02', title: 'Il choisit sa porte', body: 'Champ par champ, ou coller le contenu. Deux boutons, une seule décision à prendre.' },
+        { num: '03', title: 'Les photos sont traitées', body: 'Dépôt depuis la galerie, redimensionnement et compression automatiques. La première photo devient le visuel principal.' },
+        { num: '04', title: 'Il relit, puis il publie', body: 'Le même écran de vérification dans les deux cas. Le site se régénère seul, et un prix se corrige depuis le tableur.' }
+      ],
+      analytics: [
+        { label: 'Mesure', tool: 'Umami', why: 'Tableau de bord en français, sans cookie, hébergé en UE. Offre gratuite largement suffisante à ce volume.' },
+        { label: 'Où il le voit', tool: 'Un écran partagé', why: 'Lien privé enregistré à côté du formulaire : « fiches les plus vues », « clics sur Appeler », « formulaires envoyés ».' },
+        { label: 'Si le trafic décolle', tool: 'Cloudflare Web Analytics', why: 'Gratuit sans plafond de trafic, même classement des pages les plus vues. Bascule en quinze minutes.' }
+      ],
+      needs: [
+        { num: '01', body: 'Ton arbitrage entre les directions D « Maison » et E « Signature » — ou les éléments à garder de chacune.' },
+        { num: '02', body: 'Les photos de la Twingo III et de la Fiat 500 : les emplacements sont déjà prêts dans les maquettes.' },
+        { num: '03', body: 'Ton accord sur la liste de clés du collage : si une information manque pour la fiche, c’est maintenant qu’on l’ajoute.' },
+        { num: '04', body: 'Une ou deux annonces de plus telles qu’il les rédige, pour vérifier que le parseur encaisse ses habitudes de mise en forme.' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>
