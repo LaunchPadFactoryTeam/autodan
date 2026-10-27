@@ -12,11 +12,19 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import { BlobPreconditionFailedError, del, get, put } from '@vercel/blob';
+import { BlobNotFoundError, BlobPreconditionFailedError, del, head, put } from '@vercel/blob';
 import { SEED_CARS } from './seed';
 import type { Car, Draft, Message } from './types';
 
 export const usesBlob = () => !!process.env.BLOB_READ_WRITE_TOKEN;
+
+/** The Blob calls this module makes, gathered in one object so tests can stand in for them. */
+export const blobApi = {
+  head,
+  put,
+  del,
+  fetch: (url: string) => fetch(url, { cache: 'no-store' }),
+};
 const LOCAL_DIR = path.join(process.cwd(), '.data');
 
 export class StorageUnavailableError extends Error {
@@ -40,10 +48,20 @@ const docPath = (name: DocName) => (name === 'cars' ? 'data/cars.json' : `${priv
 async function readDoc<T>(name: DocName): Promise<{ data: T | null; etag?: string }> {
   const p = docPath(name);
   if (usesBlob()) {
-    const res = await get(p, { access: 'public', useCache: false });
-    if (!res || res.statusCode !== 200) return { data: null };
-    const text = await new Response(res.stream).text();
-    return { data: JSON.parse(text) as T, etag: res.headers.get('etag') ?? undefined };
+    // The public URL is served through Vercel's CDN, which keeps a copy for up to cacheControlMaxAge
+    // (and get()'s useCache:false only applies to private stores). Reading through the CDN returns a
+    // stale document and a stale ETag, and every conditional write then fails with "ETag mismatch".
+    // head() asks the Blob API, so its ETag is current; the unique query string skips the CDN copy.
+    let meta: Awaited<ReturnType<typeof head>>;
+    try {
+      meta = await blobApi.head(p);
+    } catch (e) {
+      if (e instanceof BlobNotFoundError) return { data: null };
+      throw e;
+    }
+    const res = await blobApi.fetch(`${meta.url}?v=${encodeURIComponent(meta.etag)}-${Date.now()}`);
+    if (!res.ok) throw new Error(`Lecture de ${p} impossible (${res.status})`);
+    return { data: JSON.parse(await res.text()) as T, etag: meta.etag };
   }
   try {
     return { data: JSON.parse(await fs.readFile(path.join(LOCAL_DIR, p), 'utf8')) as T };
@@ -57,7 +75,7 @@ async function writeDoc<T>(name: DocName, data: T, etag?: string): Promise<void>
   const p = docPath(name);
   const body = JSON.stringify(data, null, 1);
   if (usesBlob()) {
-    await put(p, body, {
+    await blobApi.put(p, body, {
       access: 'public',
       contentType: 'application/json',
       addRandomSuffix: false,
@@ -81,7 +99,10 @@ async function mutate<T>(name: DocName, fallback: () => T, fn: (current: T) => T
       await writeDoc(name, next, etag);
       return next;
     } catch (e) {
-      if (e instanceof BlobPreconditionFailedError && attempt < 4) continue;
+      if (e instanceof BlobPreconditionFailedError) {
+        if (attempt < 4) continue;
+        throw new Error('Une autre modification était en cours au même moment. Réessayez dans quelques secondes.');
+      }
       throw e;
     }
   }
@@ -122,7 +143,7 @@ export async function savePhoto(buf: Buffer, slug: string): Promise<string> {
   assertWritable();
   const name = `cars/${slug || 'brouillon'}/${Date.now().toString(36)}-${randomUUID().slice(0, 8)}.jpg`;
   if (usesBlob()) {
-    const res = await put(name, buf, { access: 'public', contentType: 'image/jpeg', addRandomSuffix: false });
+    const res = await blobApi.put(name, buf, { access: 'public', contentType: 'image/jpeg', addRandomSuffix: false });
     return res.url;
   }
   const file = path.join(LOCAL_DIR, 'media', name);
@@ -137,7 +158,7 @@ export function isOwnPhoto(url: string): boolean {
 
 export async function deletePhotos(urls: string[]): Promise<void> {
   const blobs = urls.filter((u) => /\.public\.blob\.vercel-storage\.com\//.test(u));
-  if (blobs.length && usesBlob()) await del(blobs).catch((e) => console.error('del photos', e));
+  if (blobs.length && usesBlob()) await blobApi.del(blobs).catch((e) => console.error('del photos', e));
   for (const u of urls.filter((x) => x.startsWith('/media/'))) {
     await fs.unlink(path.join(LOCAL_DIR, u.replace(/^\/+/, ''))).catch(() => {});
   }
