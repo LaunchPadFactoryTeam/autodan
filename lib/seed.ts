@@ -8,6 +8,7 @@ const T = '2026-10-04T00:00:00.000Z';
 export function emptyCar(): CarInput {
   return {
     status: 'available',
+    featured: false,
     brandName: '',
     model: '',
     subtitle: '',

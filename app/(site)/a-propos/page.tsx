@@ -23,7 +23,15 @@ export default function AboutPage() {
           <p className="claim yellow">{site.about.claim}</p>
         </div>
         <div className="photo">
-          <Image src="/images/raphael.jpg" alt="Raphaël, fondateur d’Autodan" fill sizes="(max-width: 860px) 100vw, 660px" />
+          {/* Placeholder: replace /images/about-car.jpg with a photo of the showroom or the stock. */}
+          <Image src="/images/about-car.jpg" alt="Véhicule d’occasion sélectionné par Autodan à Nice" fill sizes="(max-width: 860px) 100vw, 660px" />
+          <figure className="founder-chip">
+            <Image src="/images/raphael-avatar.jpg" alt="" width={48} height={48} />
+            <figcaption>
+              <span className="n">Raphaël Danyach</span>
+              <span className="r">Fondateur d’Autodan</span>
+            </figcaption>
+          </figure>
         </div>
       </div>
 

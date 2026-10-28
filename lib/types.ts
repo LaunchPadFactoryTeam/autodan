@@ -8,6 +8,8 @@ export interface EquipmentGroup {
 export interface Car {
   slug: string;
   status: CarStatus;
+  /** Shown in « Nos voitures du moment » on the home page. */
+  featured?: boolean;
   brandName: string;
   model: string;
   subtitle: string;

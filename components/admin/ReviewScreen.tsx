@@ -241,6 +241,13 @@ export function ReviewScreen({
           <span>Description</span>
           <textarea className="bo-input" rows={7} value={car.description} onChange={(e) => set('description', e.target.value)} />
         </label>
+        <label className="bo-field" style={{ justifyContent: 'flex-end' }}>
+          <span>Page d’accueil</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 10, minHeight: 46, fontSize: 15, color: 'inherit' }}>
+            <input type="checkbox" checked={!!car.featured} onChange={(e) => set('featured', e.target.checked)} style={{ width: 20, height: 20 }} />
+            Mettre dans « Nos voitures du moment »
+          </span>
+        </label>
         <label className="bo-field">
           <span>Visibilité</span>
           <select className="bo-input" value={car.status} onChange={(e) => set('status', e.target.value as CarInput['status'])}>

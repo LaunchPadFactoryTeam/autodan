@@ -125,6 +125,7 @@ textarea.bo-input { resize: vertical; line-height: 1.55; }
 .bo-status { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 4px 8px; margin-left: 8px; vertical-align: 2px; }
 .bo-status.available { background: var(--bo-gold); color: var(--bo-night); }
 .bo-status.sold { background: var(--bo-night); color: #fff; }
+.bo-status.featured { background: var(--bo-tint); color: var(--bo-brass); }
 .bo-status.hidden { background: var(--bo-tint); color: var(--bo-ink-60); }
 
 .bo-msg { padding: 18px 0; border-bottom: 1px solid var(--bo-rule); }

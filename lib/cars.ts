@@ -13,6 +13,16 @@ export const getPublicCars = cache(async (): Promise<Car[]> => {
     .sort((a, b) => rank(a) - rank(b) || b.createdAt.localeCompare(a.createdAt));
 });
 
+/**
+ * « Nos voitures du moment » on the home page: the cars ticked in the backoffice.
+ * Until none is ticked, the newest cars stand in so the section is never empty.
+ */
+export async function getHomeCars(limit = 6): Promise<Car[]> {
+  const cars = await getPublicCars();
+  const featured = cars.filter((c) => c.featured);
+  return (featured.length ? featured : cars).slice(0, limit);
+}
+
 export async function getPublicCar(slug: string): Promise<Car | undefined> {
   return (await getPublicCars()).find((c) => c.slug === slug);
 }
@@ -36,6 +46,7 @@ export function sanitizeCarInput(raw: unknown): CarInput {
   return {
     slug: str(r.slug, 100) || undefined,
     status,
+    featured: r.featured === true,
     brandName: str(r.brandName, 60),
     model: str(r.model, 80),
     subtitle: str(r.subtitle, 160),

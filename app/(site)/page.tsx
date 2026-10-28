@@ -1,21 +1,30 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { CarCard } from '@/components/CarCard';
-import { getPublicCars } from '@/lib/cars';
+import { getHomeCars, getPublicCars } from '@/lib/cars';
 import { site } from '@/lib/site';
 
 export const revalidate = 86400;
 
 export default async function HomePage() {
-  const cars = await getPublicCars();
-  const available = cars.filter((c) => c.status === 'available').length;
+  const [all, homeCars] = await Promise.all([getPublicCars(), getHomeCars()]);
+  const available = all.filter((c) => c.status === 'available').length;
   const t = site.testimonial;
 
   return (
     <main>
       <section className="hero">
+        <Image
+          src="/images/hero-audi.jpg"
+          alt="Audi TT gris Autodan sur les hauteurs de Nice, vue sur la mer"
+          fill
+          priority
+          sizes="100vw"
+          className="hero-bg"
+        />
+        <div className="fade" />
         <div className="wrap">
-          <div>
+          <div className="hero-text">
             <span className="hero-count">
               {available} véhicule{available > 1 ? 's' : ''} disponible{available > 1 ? 's' : ''} à Nice
             </span>
@@ -36,23 +45,13 @@ export default async function HomePage() {
               </a>
             </div>
           </div>
-          <div className="hero-photo">
-            <Image
-              src="/images/hero-audi.jpg"
-              alt="Audi TT gris Autodan sur les hauteurs de Nice, vue sur la mer"
-              fill
-              priority
-              sizes="(max-width: 860px) 100vw, 600px"
-            />
-            <div className="fade" />
-            <div className="caption">
-              <p className="k">Autodan · Nice</p>
-              <p className="t">
-                Livrée, immatriculée,
-                <br />
-                prête à rouler.
-              </p>
-            </div>
+          <div className="hero-caption">
+            <p className="k">Autodan · Nice</p>
+            <p className="t">
+              Livrée, immatriculée,
+              <br />
+              prête à rouler.
+            </p>
           </div>
         </div>
       </section>
@@ -85,7 +84,7 @@ export default async function HomePage() {
         </div>
         <div className="wrap pb72">
           <div className="car-grid">
-            {cars.slice(0, 6).map((c, i) => (
+            {homeCars.map((c, i) => (
               <CarCard key={c.slug} car={c} priority={i === 0} />
             ))}
           </div>

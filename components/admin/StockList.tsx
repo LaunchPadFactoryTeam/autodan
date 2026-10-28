@@ -24,7 +24,7 @@ export function StockList({
   const [busy, setBusy] = useState<string | null>(null);
   const [prices, setPrices] = useState<Record<string, string>>({});
 
-  async function patch(slug: string, body: { status?: CarStatus; price?: number | null }, ok: string) {
+  async function patch(slug: string, body: { status?: CarStatus; price?: number | null; featured?: boolean }, ok: string) {
     setBusy(slug);
     try {
       const { car } = await api.patch<{ car: Car }>(`/api/admin/cars/${slug}`, body);
@@ -51,6 +51,8 @@ export function StockList({
     }
   }
 
+  const featuredCount = cars.filter((c) => c.featured && c.status !== 'hidden').length;
+
   if (!cars.length) return <p className="bo-empty">Aucun véhicule pour le moment. Ajoutez-en un depuis l’onglet « Ajouter un véhicule ».</p>;
 
   return (
@@ -58,7 +60,15 @@ export function StockList({
       <h2 className="bo-h2">
         Le stock · <b>{cars.filter((c) => c.status === 'available').length} en vente</b>
       </h2>
-      <p className="bo-lead">Changez un prix ou passez un véhicule en « Vendu » en un geste. Pour tout le reste : « Modifier ».</p>
+      <p className="bo-lead">
+        Changez un prix ou passez un véhicule en « Vendu » en un geste. Pour tout le reste : « Modifier ».
+      </p>
+      <p className="bo-lead">
+        ★ <b>Voiture du moment</b> : choisissez les voitures affichées en page d’accueil.{' '}
+        {featuredCount
+          ? `${featuredCount} sélectionnée${featuredCount > 1 ? 's' : ''} (6 au maximum à l’affichage).`
+          : 'Aucune sélection pour l’instant : ce sont les plus récentes qui s’affichent.'}
+      </p>
       <div className="bo-list">
         {cars.map((car) => {
           const priceDraft = prices[car.slug] ?? (car.price != null ? String(car.price) : '');
@@ -75,6 +85,7 @@ export function StockList({
                 <p className="name">
                   {carTitle(car)} {car.year}
                   <span className={`bo-status ${car.status}`}>{STATUS_LABEL[car.status]}</span>
+                  {car.featured && <span className="bo-status featured">★ À la une</span>}
                 </p>
                 <p className="meta">{[car.subtitle, euro(car.price), kmLabel(car.km)].filter(Boolean).join(' · ')}</p>
                 <div className="controls">
@@ -110,6 +121,22 @@ export function StockList({
                       Valider le prix
                     </button>
                   )}
+                  <button
+                    type="button"
+                    className={`bo-btn sm ${car.featured ? 'gold' : 'line'}`}
+                    aria-pressed={!!car.featured}
+                    disabled={busy === car.slug}
+                    title="Afficher dans « Nos voitures du moment » en page d’accueil"
+                    onClick={() =>
+                      patch(
+                        car.slug,
+                        { featured: !car.featured },
+                        car.featured ? `${carTitle(car)} retiré de la page d’accueil.` : `${carTitle(car)} affiché en page d’accueil.`,
+                      )
+                    }
+                  >
+                    {car.featured ? '★ Voiture du moment' : '☆ Voiture du moment'}
+                  </button>
                   <button type="button" className="bo-btn sm" onClick={() => onEdit(car)}>
                     Modifier
                   </button>
